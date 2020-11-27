@@ -1,36 +1,45 @@
-def merge_sort(arr):
-  def merge(sub_arr,p,q):
-    L = []
-    R = []
+
+def merge(sub_arr, p, q):
+    left = []
+    right = []
+
     for i in range(p):
-        L.append(sub_arr[i])
+        left.append(sub_arr[i])
+
     for i in range(q-p):
-        R.append(sub_arr[p+i])
-    L.append('n')
-    R.append('n')
-    j=k=0
+        right.append(sub_arr[p+i])
+
+    left.append('n')
+    right.append('n')
+
+    j = k = 0
     for i in range(q):
-        if L[j] < R[k] :
-            sub_arr[i] = L[j]
+        if left[j] < right[k]:
+            sub_arr[i] = left[j]
             j += 1
         else:
-            sub_arr[i] = R[k]
+            sub_arr[i] = right[k]
             k += 1
-  if len(arr) > 1 :
-    ls = arr[:len(arr)/2]
-    rs = arr[len(arr)/2:]
-    ls = merge_sort(ls)
-    rs = merge_sort(rs)    
-    arr = ls + rs
-    merge (arr,len(arr)/2,len(arr))
-  return arr
+
+
+def merge_sort(arr):
+    if len(arr) > 1:
+        leftSide = arr[:len(arr)/2]
+        rightSide = arr[len(arr)/2:]
+        leftSide = merge_sort(leftSide)
+        rightSide = merge_sort(rightSide)
+        arr = leftSide + rightSide
+        merge(arr, len(arr)/2, len(arr))
+
+    return arr
+
 
 def main():
-	global lista
-        f = open ('info.txt','r')
-        lista = f.read().split(",")
-        f.close()
-        print(len(lista))
-        merge_sort(lista)
-        print(len(lista))
+    f = open('info.txt', 'r')
+    lista = f.read().split(",")
+    f.close()
+    merge_sort(lista)
+    print(len(lista))
+
+
 main()
